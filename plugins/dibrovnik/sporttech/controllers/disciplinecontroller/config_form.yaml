@@ -1,0 +1,10 @@
+name: DisciplineController
+form: $/dibrovnik/sporttech/models/discipline/fields.yaml
+modelClass: Dibrovnik\SportTech\Models\Discipline
+defaultRedirect: dibrovnik/sporttech/disciplinecontroller
+create:
+    redirect: 'dibrovnik/sporttech/disciplinecontroller/update/:id'
+    redirectClose: dibrovnik/sporttech/disciplinecontroller
+update:
+    redirect: dibrovnik/sporttech/disciplinecontroller
+    redirectClose: dibrovnik/sporttech/disciplinecontroller

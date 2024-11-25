@@ -1,0 +1,47 @@
+fields:
+    code:
+        label: Code
+        span: auto
+        type: text
+    name:
+        label: Name
+        span: auto
+        type: text
+    gender:
+        label: Gender
+        span: auto
+        type: text
+    age_group:
+        label: 'Age group'
+        span: auto
+        type: text
+    start_date:
+        label: 'Start date'
+        mode: date
+        span: auto
+        type: datepicker
+    end_date:
+        label: 'End date'
+        span: auto
+        mode: date
+        type: datepicker
+    country:
+        label: Country
+        span: auto
+        type: text
+    location:
+        label: Location
+        span: auto
+        type: text
+    region:
+        label: Region
+        span: auto
+        type: text
+    city:
+        label: City
+        span: auto
+        type: text
+    participants_count:
+        label: 'Participants count'
+        span: auto
+        type: number

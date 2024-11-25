@@ -1,0 +1,546 @@
+url = "/"
+layout = "default"
+title = "Главная страница"
+description = "Welcome to the vanilla theme for October CMS!"
+hidden = 0
+==
+<?php
+function generateEvents(
+  $day,
+  $month,
+  $year,
+  $eventsData
+) {
+  $eventsData;
+
+  $maxVisibleEvents = 3;
+  $totalEvents = count($eventsData->$day);
+  $events = '';
+
+  if (count($eventsData->$day) === 0) {
+    return $events;
+  }
+
+
+  for ($i = 1; $i <= min($totalEvents, $maxVisibleEvents - 1); $i++) {
+    $name = $eventsData->$day;
+    $name = $name[$i - 1]->name;
+    $color = $this->getColorForEvent($eventsData->$day[$i - 1]->id);
+
+    $events .= "<div class='event'>
+        <span style='background-color: $color; width: 10px; height: 10px; border-radius: 50%; display: block; aspect-ratio: 1;'></span>
+        <p class='fs-12 fw-400'>" . $name . "</p>
+      </div>";
+  }
+
+  if ($totalEvents > $maxVisibleEvents - 1) {
+    $extraEvents = $totalEvents - $maxVisibleEvents;
+    $name = $eventsData->$day;
+    $name = $name[$maxVisibleEvents - 1]->name;
+    $color = $this->getColorForEvent($eventsData->$day[$maxVisibleEvents - 1]->id);
+
+
+    $events .= "<div class='event__row'>";
+
+    $events .= "<div class='event'>
+        <span style='background-color: $color; width: 10px; height: 10px; border-radius: 50%; display: block; aspect-ratio: 1;'></span>
+        <p class='fs-12 fw-400'>$name</p>
+      </div>";
+
+    if ($extraEvents > 0) {
+      $events .= "<div class='event extra'>
+            <p class='fs-12 fw-400'>+$extraEvents</p>
+          </div>";
+    }
+
+    $events .= "</div>";
+  }
+
+  return $events;
+}
+function generateCalendar($month, $year)
+{
+  $daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
+  $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+
+  $firstDayOfMonth = date('N', strtotime("$year-$month-01"));
+
+
+  $months = [
+    1 => 'январь',
+    'февраль',
+    'март',
+    'апрель',
+    'май',
+    'июнь',
+    'июль',
+    'август',
+    'сентябрь',
+    'октябрь',
+    'ноябрь',
+    'декабрь'
+  ];
+  $monthName = $months[$month];
+
+  $calendar = "<div id='calendar-container'>";
+  $calendar .= "<div class='calendar-header'>";
+  $calendar .= "<div id='current-month' class='fs-16 fw-700'>$monthName $year</div>";
+  $calendar .= "<button onclick='changeMonth(-1)'>
+  <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
+  <path d='M16.146 4.93887C16.2854 5.07817 16.396 5.24358 16.4714 5.42563C16.5469 5.60768 16.5857 5.80281 16.5857 5.99987C16.5857 6.19694 16.5469 6.39207 16.4714 6.57412C16.396 6.75617 16.2854 6.92157 16.146 7.06087L11.561 11.6469C11.4673 11.7406 11.4146 11.8678 11.4146 12.0004C11.4146 12.133 11.4673 12.2601 11.561 12.3539L16.146 16.9389C16.4274 17.2201 16.5855 17.6017 16.5856 17.9995C16.5857 18.3974 16.4278 18.779 16.1465 19.0604C15.8653 19.3418 15.4837 19.4999 15.0859 19.5C14.688 19.5001 14.3064 19.3421 14.025 19.0609L9.43901 14.4749C9.11397 14.1499 8.85613 13.764 8.68022 13.3393C8.5043 12.9147 8.41376 12.4595 8.41376 11.9999C8.41376 11.5402 8.5043 11.0851 8.68022 10.6604C8.85613 10.2357 9.11397 9.84988 9.43901 9.52487L14.025 4.93887C14.3063 4.65767 14.6878 4.49969 15.0855 4.49969C15.4833 4.49969 15.8647 4.65767 16.146 4.93887Z' fill='#212121'/>
+</svg>
+</button>";
+  $calendar .= "<button onclick='changeMonth(1)'>
+  <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
+  <path d='M7.85399 4.93887C7.7146 5.07817 7.60402 5.24358 7.52858 5.42563C7.45314 5.60768 7.41431 5.80281 7.41431 5.99987C7.41431 6.19694 7.45314 6.39207 7.52858 6.57412C7.60402 6.75617 7.7146 6.92157 7.85399 7.06087L12.439 11.6469C12.5327 11.7406 12.5854 11.8678 12.5854 12.0004C12.5854 12.133 12.5327 12.2601 12.439 12.3539L7.85399 16.9389C7.57259 17.2201 7.41445 17.6017 7.41436 17.9995C7.41427 18.3974 7.57222 18.779 7.85349 19.0604C8.13475 19.3418 8.51627 19.4999 8.91413 19.5C9.31199 19.5001 9.69359 19.3421 9.97499 19.0609L14.561 14.4749C14.886 14.1499 15.1439 13.764 15.3198 13.3393C15.4957 12.9147 15.5862 12.4595 15.5862 11.9999C15.5862 11.5402 15.4957 11.0851 15.3198 10.6604C15.1439 10.2357 14.886 9.84988 14.561 9.52487L9.97499 4.93887C9.6937 4.65767 9.31223 4.49969 8.91449 4.49969C8.51674 4.49969 8.13528 4.65767 7.85399 4.93887Z' fill='#212121'/>
+</svg>
+</button>";
+  $calendar .= "<div class='calendar-filter-button' id='filterCalendar'>
+  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'>
+  <g clip-path='url(#clip0_1_203)'>
+    <path d='M12.3333 1.33333H12V1C12 0.734784 11.8946 0.48043 11.7071 0.292893C11.5196 0.105357 11.2652 0 11 0V0C10.7348 0 10.4804 0.105357 10.2929 0.292893C10.1054 0.48043 10 0.734784 10 1V1.33333H6V1C6 0.734784 5.89464 0.48043 5.70711 0.292893C5.51957 0.105357 5.26522 0 5 0V0C4.73478 0 4.48043 0.105357 4.29289 0.292893C4.10536 0.48043 4 0.734784 4 1V1.33333H3.66667C2.69421 1.33333 1.76158 1.71964 1.07394 2.40728C0.386308 3.09491 0 4.02754 0 5L0 12.3333C0 13.3058 0.386308 14.2384 1.07394 14.9261C1.76158 15.6137 2.69421 16 3.66667 16H12.3333C13.3058 16 14.2384 15.6137 14.9261 14.9261C15.6137 14.2384 16 13.3058 16 12.3333V5C16 4.02754 15.6137 3.09491 14.9261 2.40728C14.2384 1.71964 13.3058 1.33333 12.3333 1.33333ZM12.3333 14H3.66667C3.22464 14 2.80072 13.8244 2.48816 13.5118C2.17559 13.1993 2 12.7754 2 12.3333V6.66667H14V12.3333C14 12.7754 13.8244 13.1993 13.5118 13.5118C13.1993 13.8244 12.7754 14 12.3333 14Z' fill='#1E88E5'/>
+  </g>
+  <defs>
+    <clipPath id='clip0_1_203'>
+      <rect width='16' height='16' fill='white'/>
+    </clipPath>
+  </defs>
+</svg>
+<p class='fs-14 fw-400'>Фильтры</p>
+</div>";
+  $calendar .= "</div>";
+
+  $calendar .= "<div class='calendar-grid'>";
+
+  $calendar .= "<div id='calendar-days'>";
+
+  $opts = [
+    "http" => [
+      "method" => "GET",
+      "header" => "Accept-language: ru\r\n" .
+        "Cookie: foo=bar\r\n"
+    ]
+  ];
+
+  $context = stream_context_create($opts);
+
+  $query = $this->getQueries();
+  $url = 'https://dev-level.ru/api/v1/events/' . $year . '/' . $month . '/' . '?sport=АВИАМОДЕЛЬНЫЙ%20СПОРТ' . $query;
+  $eventsData = json_decode(file_get_contents($url));
+  for ($i = 1; $i < $firstDayOfMonth; $i++) {
+    $calendar .= "<div class='day empty'></div>";
+  }
+  
+
+  for ($day = 1; $day <= $daysInMonth; $day++) {
+    $isToday = ($day == date('j') && $month == date('n') && $year == date('Y'));
+    $dayOfWeek = $daysOfWeek[date('N', strtotime("$year-$month-$day")) - 1];
+    $todayClass = $isToday ? 'today' : '';
+
+    $emptyEvents = '';
+
+    if ($this->generateEventLine($eventsData->events_by_day, $day) === '') {
+      $emptyEvents = 'emptyEvents';
+    }
+
+    $calendar .=
+      "<div data-date='$year-$month-$day' data-options='$query' class='day $todayClass $emptyEvents'>
+      <div class='day__title'><p class='fs-12 fw-400'>$dayOfWeek</p> <p class='fs-12 fw-700'>$day</p></div>
+      <div class='day__events_color' style='margin-bottom: auto;'>" .
+      $this->generateEventLine($eventsData->events_by_day, $day)
+      . "</div>
+      <div class='day__events'>
+      " .
+      $this->generateEvents($day, $month, $year, $eventsData->events_by_day)
+      .
+      "</div>
+    </div>";
+  }
+
+
+
+  $calendar .= "</div></div></div>";
+  return $calendar;
+}
+function getColorForEvent($eventId)
+{
+  $hash = md5($eventId);
+  return '#' . substr($hash, 0, 6);
+}
+function generateEventLine($eventsData, $day)
+{
+  $eventLines = '';
+  if (count($eventsData->$day) === 0) {
+    return $eventLines;
+  }
+  foreach ($eventsData->$day as $value) {
+    $color = $this->getColorForEvent($value->id);
+    // $start_date = @str_split(@$value->start_date, 2)[0];
+    // $end_date = @str_split(@$value->end_date, 2)[0];
+    // if ($start_date <= $day && @$end_date >= $day) {
+    $eventLines .= "<span data-day='$day' style='display: block; background-color: $color; height: 5px;'></span>";
+    // }
+  }
+  return $eventLines;
+}
+
+function getQueries()
+{
+  $query = '';
+  foreach ($_GET as $key => $value) {
+    $query .= "$key=$value&";
+  }
+  return isset($query) ? str_replace(' ', '%20', $query) : '';
+}
+
+function generateSports() {
+  $sports = json_decode(file_get_contents('https://dev-level.ru/api/v1/sports'));
+  $options = '';
+  foreach ($sports as $key => $value) {
+    $sel = $key == 0 ? 'selected' : '';
+    $options .= "<option $sel vlaue='$value->id'>$value->name</option>";
+  };
+  return $options;
+}
+
+function onStart()
+{
+    $month = isset($_GET['month']) ? (int)$_GET['month'] : date('n');
+    $year = isset($_GET['year']) ? (int)$_GET['year'] : date('Y');
+    
+    if ($month < 1) { $month=12; $year--; } elseif ($month> 12) {
+        $month = 1;
+        $year++;
+    }
+
+    $this['page'] = $this->generateCalendar($month, $year);
+    $this['month'] = $month;
+    $this['year'] = $year;
+    $this['sports'] = $this->generateSports();
+
+}
+
+?>
+==
+<main>
+  <section class="wrapper">
+    <div class="main">
+      <div class="main__content">
+        <h2 class="main__title fs-48">Найдите свое следующее спортивное событие!</h2>
+        <p class="main__text fs-16">Платформа, которая объединяет спортсменов, тренеров и любителей спорта.
+          Следите за событиями, участвуйте, побеждайте!</p>
+        <a href="#calendar-container" class="main__link fs-16">
+          <p>Ищите мероприятия</p>
+          <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_1_248)">
+              <path
+                d="M17.4852 26.5866H23.0275C23.9491 26.565 24.8269 26.1893 25.4787 25.5375C26.1305 24.8857 26.5062 24.0079 26.5277 23.0864L26.5277 17.5441C26.5278 17.1462 26.3699 16.7646 26.0886 16.4832C25.8073 16.2019 25.4258 16.0437 25.0279 16.0436C24.6301 16.0435 24.2485 16.2015 23.9671 16.4827C23.6857 16.764 23.5276 17.1455 23.5275 17.5434L23.5268 21.4756L10.6058 8.58718C10.3245 8.30588 9.94296 8.14784 9.54513 8.14784C9.14731 8.14784 8.76578 8.30588 8.48447 8.58718C8.20317 8.86849 8.04513 9.25002 8.04513 9.64784C8.04513 10.0457 8.20317 10.4272 8.48447 10.7085L21.392 23.5835L17.4845 23.5863C17.0913 23.5932 16.7164 23.7542 16.4408 24.0347C16.1651 24.3152 16.0106 24.6928 16.0106 25.0861C16.0106 25.4794 16.1651 25.857 16.4408 26.1375C16.7164 26.418 17.0913 26.579 17.4845 26.5859L17.4852 26.5866Z"
+                fill="#1E88E5" />
+            </g>
+            <defs>
+              <clipPath id="clip0_1_248">
+                <rect width="24" height="24" fill="white" transform="translate(16.9706 0.0588379) rotate(45)" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+      <div class="main__img">
+        <img src="https://dev-level.ru/storage/app/media/b141677587027e54fdf3e15f5bbda233.png" alt="">
+      </div>
+      <div class="mob">
+        <a href="#calendar-container" class="mob__link fs-16">
+          <p>Ищите мероприятия</p>
+          <svg style="overflow: visible;" width="34" height="34" viewBox="0 0 34 34" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_1_248)">
+              <path
+                d="M17.4852 26.5866H23.0275C23.9491 26.565 24.8269 26.1893 25.4787 25.5375C26.1305 24.8857 26.5062 24.0079 26.5277 23.0864L26.5277 17.5441C26.5278 17.1462 26.3699 16.7646 26.0886 16.4832C25.8073 16.2019 25.4258 16.0437 25.0279 16.0436C24.6301 16.0435 24.2485 16.2015 23.9671 16.4827C23.6857 16.764 23.5276 17.1455 23.5275 17.5434L23.5268 21.4756L10.6058 8.58718C10.3245 8.30588 9.94296 8.14784 9.54513 8.14784C9.14731 8.14784 8.76578 8.30588 8.48447 8.58718C8.20317 8.86849 8.04513 9.25002 8.04513 9.64784C8.04513 10.0457 8.20317 10.4272 8.48447 10.7085L21.392 23.5835L17.4845 23.5863C17.0913 23.5932 16.7164 23.7542 16.4408 24.0347C16.1651 24.3152 16.0106 24.6928 16.0106 25.0861C16.0106 25.4794 16.1651 25.857 16.4408 26.1375C16.7164 26.418 17.0913 26.579 17.4845 26.5859L17.4852 26.5866Z"
+                fill="#1E88E5" />
+            </g>
+            <defs>
+              <clipPath id="clip0_1_248">
+                <rect width="24" height="24" fill="white" transform="translate(16.9706 0.0588379) rotate(45)" />
+              </clipPath>
+            </defs>
+          </svg>
+
+        </a>
+        <div class="mob__img">
+          <img src="https://dev-level.ru/storage/app/media/b141677587027e54fdf3e15f5bbda233.png" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrapper calendar">
+    <div class="calendar__title">
+      <h2 class="fs-36 fw-500">Календарь мероприятий</h2>
+    </div>
+    {{ page|raw }}
+  </div>
+
+  <div class="filter-calendar">
+    <div class="filter-container">
+      <div class="filter-left">
+        <div class="navigation-dots">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <ul class="filter-menu">
+          <li data-filter-type="sport" class="menu-item selected">ВИД СПОРТА И ДИСЦИПЛИНА</li>
+          <li data-filter-type="holding" class="menu-item">ВРЕМЯ ПРОВЕДЕНИЯ</li>
+          <li data-filter-type="location" class="menu-item">МЕСТО ПРОВЕДЕНИЯ</li>
+          <li data-filter-type="discipline" class="menu-item">ВЫБРАТЬ ДИСЦИПЛИНУ</li>
+          <li data-filter-type="extra" class="menu-item">ДОПОЛНИТЕЛЬНЫЕ ПАРАМЕТРЫ</li>
+        </ul>
+        <button class="clear-filters">Очистить фильтры</button>
+      </div>
+      <div class="filter-right">
+        <h2 class="filter-title">ФИЛЬТРЫ</h2>
+        <div class="filter-options sport open">
+          <div class="filter-options-row">
+            <select name="sport" id="sport-filter">
+              {{ sports|raw }}
+            </select>
+            <button onclick="changeSport()" class="set-interval">Задать спорт</button>
+          </div>
+        </div>
+        <div class="filter-options location">
+          <div class="filter-options-row">
+            <select name="sport" id="sport-filter">
+              {{ sports|raw }}
+            </select>
+            <button onclick="changeSport()" class="set-interval">Задать спорт</button>
+          </div>
+        </div>
+        <div class="filter-options discipline">
+          <div class="filter-options-row">
+            <select name="sport" id="sport-filter">
+              {{ sports|raw }}
+            </select>
+            <button onclick="changeSport()" class="set-interval">Задать спорт</button>
+          </div>
+        </div>
+        <div class="filter-options extra">
+          <div class="filter-options-row">
+            <select name="sport" id="sport-filter">
+              {{ sports|raw }}
+            </select>
+            <button onclick="changeSport()" class="set-interval">Задать спорт</button>
+          </div>
+        </div>
+        <div class="filter-options holding">
+          <div class="filter-options-row">
+            <input type="checkbox" name="holding" id="holding_1" value="1">
+            <label for="holding_1">1 день</label>
+          </div>
+          <div class="filter-options-row">
+            <input type="checkbox" name="holding" id="holding_2" value="2">
+            <label for="holding_2">2 дня</label>
+          </div>
+          <div class="filter-options-row">
+            <input type="checkbox" name="holding" id="holding_3" value="3">
+            <label for="holding_3">3 дня</label>
+          </div>
+          <div class="filter-options-row">
+            <input type="checkbox" name="holding" id="holding_5" value="5">
+            <label for="holding_5">5 дней</label>
+          </div>
+          <div class="filter-options-row">
+            <input type="checkbox" name="holding" id="holding_7" value="7">
+            <label for="holding_7">7 дней</label>
+          </div>
+          <button class="set-interval">Установить промежуток</button>
+        </div>
+        <div class="filter-options location">
+          <div class="filter-options-row">
+            <p class="fs-12 fw-500">Страна:</p>
+            <input type="checkbox" name="holdcountrying" id="country_Россия" value="Россия">
+            <label for="country_Россия">Россия</label>
+          </div>
+          <button class="set-interval">Установить промежуток</button>
+        </div>
+        <button class="close-filters">✕</button>
+      </div>
+    </div>
+
+  </div>
+
+  <dialog id="modal_day" class="_modal">
+    <div class="_modal__inner">
+      <div class="_modal__title">
+        <h2 class="fs-16 fw-700 dayOfWeek" style="text-transform: capitalize"></h2>
+        <button class="modal__close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M14.1211 11.9998L18.0001 8.11682C18.2519 7.83058 18.3853 7.45918 18.3732 7.07811C18.361 6.69705 18.2042 6.33491 17.9346 6.06532C17.665 5.79573 17.3029 5.63891 16.9218 5.62674C16.5407 5.61458 16.1693 5.74797 15.8831 5.99982L12.0001 9.87882L8.11008 5.98782C7.97074 5.84849 7.80533 5.73796 7.62329 5.66256C7.44124 5.58715 7.24612 5.54834 7.04908 5.54834C6.85203 5.54834 6.65691 5.58715 6.47487 5.66256C6.29282 5.73796 6.12741 5.84849 5.98808 5.98782C5.84874 6.12715 5.73822 6.29256 5.66281 6.47461C5.58741 6.65666 5.5486 6.85177 5.5486 7.04882C5.5486 7.24587 5.58741 7.44098 5.66281 7.62303C5.73822 7.80508 5.84874 7.97049 5.98808 8.10982L9.87908 11.9998L6.00008 15.8818C5.84795 16.0178 5.72517 16.1834 5.63924 16.3685C5.55331 16.5536 5.50605 16.7542 5.50034 16.9582C5.49463 17.1621 5.5306 17.3651 5.60604 17.5547C5.68148 17.7443 5.79481 17.9165 5.9391 18.0608C6.08338 18.2051 6.25558 18.3184 6.44517 18.3939C6.63476 18.4693 6.83775 18.5053 7.04172 18.4996C7.24569 18.4938 7.44635 18.4466 7.63142 18.3607C7.81649 18.2747 7.98209 18.1519 8.11808 17.9998L12.0001 14.1208L15.8781 17.9998C16.1595 18.2812 16.5411 18.4393 16.9391 18.4393C17.337 18.4393 17.7187 18.2812 18.0001 17.9998C18.2815 17.7184 18.4396 17.3368 18.4396 16.9388C18.4396 16.5409 18.2815 16.1592 18.0001 15.8778L14.1211 11.9998Z"
+              fill="#212121" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal__events" id="eventsContainer">
+
+      </div>
+  </dialog>
+</main>
+
+<script>
+  function changeSport() {
+    // Получение текущих параметров URL
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const otherParams = new URLSearchParams();
+    for (const [key, value] of urlParams.entries()) {
+      if (key !== "month" && key !== "year" && key !== "sport") {
+        otherParams.append(key, value);
+      }
+    }
+
+    // Получаем значение выбранного спорта из фильтра
+    const sport = document.querySelector('#sport-filter').value;
+
+    // Формируем новый URL с обновленными параметрами
+    window.location.search = `?month=${urlParams.get("month") || new Date().getMonth() + 1}&year=${urlParams.get("year") || new Date().getFullYear()}${otherParams.toString().replace('&sport="\[A-Z]+&\"', '')}&sport=${sport}`;
+  }
+  function changeMonth(direction) {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let month = parseInt(urlParams.get("month")) || new Date().getMonth() + 1;
+    let year = parseInt(urlParams.get("year")) || new Date().getFullYear();
+    month += direction;
+    if (month < 1) {
+      month = 12;
+      year--;
+    } else if (month > 12) {
+      month = 1;
+      year++;
+    }
+
+    const otherParams = new URLSearchParams();
+    console.log(otherParams);
+    for (const entry of urlParams.entries()) {
+      if (entry[0] !== "month" && entry[0] !== "year") {
+        otherParams.append(entry[0], entry[1]);
+      }
+    }
+
+    window.location.search = `?month=${month}&year=${year}&${otherParams.toString() === '' ? '&sport=АВИАМОДЕЛЬНЫЙ%20СПОРТ' : otherParams.toString()}`;
+  }
+
+  document.querySelectorAll(".day").forEach((day) => {
+    day.addEventListener("click", () => {
+      if (day.classList.contains('emptyEvents')) {
+        return;
+      }
+      let year = day.getAttribute("data-date").split("-")[0];
+      let month = day.getAttribute("data-date").split("-")[1];
+      let dayOfMonth = day.getAttribute("data-date").split("-")[2];
+      let options = day.getAttribute("data-options");
+
+      let date = new Date(year, month - 1, dayOfMonth);
+      let dayOfWeek = date.toLocaleString("ru", { weekday: "long" });
+
+      let xCoord;
+      let yCoord;
+
+      if (window.innerWidth / 2 <= day.getBoundingClientRect().left) {
+        xCoord = day.getBoundingClientRect().left - 600;
+        yCoord = day.getBoundingClientRect().top;
+      } else {
+        xCoord = day.getBoundingClientRect().left + day.clientWidth;
+        yCoord = day.getBoundingClientRect().top;
+      }
+
+      fetch(
+        `https://dev-level.ru/api/v1/events/date/${year}-${month.length === 1 ? `0${month}` : month
+        }-${dayOfMonth.length === 1 ? `0${dayOfMonth}` : dayOfMonth}/?sport=АВИАМОДЕЛЬНЫЙ%20СПОРТ&&${options}`
+      ).then((response) => {
+        response.json().then((eventsData) => {
+          const eventsContainer = document.getElementById("eventsContainer");
+          eventsContainer.innerHTML = '';
+
+          eventsData.forEach((event) => {
+            const eventElement = document.createElement("div");
+            eventElement.classList.add("modal__event");
+
+            let disciplines = event.disciplines.join(", ");
+
+            eventElement.innerHTML = `
+      <div class="modal__event__left">
+        <h4 class="fs-12 fw-700">${event.name}</h4>
+        <p class="fs-12 fw-500">${event.sport}</p>
+        <p class="fs-8 fw-400">${disciplines}</p>
+        <p class="fs-10 fw-400">${event.gender}</p>
+        <p class="fs-8 fw-400">${event.location}, ${event.country}</p>
+      </div>
+      <div class="modal__event__right">
+        <div class="date">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 13" fill="none">
+            <g clip-path="url(#clip0_24_591)">
+              <path d="M12 6.5C12 8.0913 11.3679 9.61742 10.2426 10.7426C9.11742 11.8679 7.5913 12.5 6 12.5C4.4087 12.5 2.88258 11.8679 1.75736 10.7426C0.632141 9.61742 0 8.0913 0 6.5C0 6.30109 0.0790176 6.11032 0.21967 5.96967C0.360322 5.82902 0.551088 5.75 0.75 5.75C0.948912 5.75 1.13968 5.82902 1.28033 5.96967C1.42098 6.11032 1.5 6.30109 1.5 6.5C1.5 7.39002 1.76392 8.26004 2.25839 9.00007C2.75285 9.74009 3.45566 10.3169 4.27792 10.6575C5.10019 10.9981 6.00499 11.0872 6.87791 10.9135C7.75082 10.7399 8.55264 10.3113 9.18198 9.68198C9.81132 9.05264 10.2399 8.25082 10.4135 7.37791C10.5872 6.50499 10.4981 5.60019 10.1575 4.77792C9.81686 3.95566 9.24009 3.25285 8.50007 2.75839C7.76004 2.26392 6.89002 2 6 2C5.80109 2 5.61032 1.92098 5.46967 1.78033C5.32902 1.63968 5.25 1.44891 5.25 1.25C5.25 1.05109 5.32902 0.860322 5.46967 0.71967C5.61032 0.579018 5.80109 0.5 6 0.5C7.59077 0.501721 9.1159 1.13441 10.2407 2.25926C11.3656 3.38411 11.9983 4.90923 12 6.5ZM3.5 6.5C3.5 6.69891 3.57902 6.88968 3.71967 7.03033C3.86032 7.17098 4.05109 7.25 4.25 7.25H5.345C5.53496 7.4172 5.78147 7.50578 6.0344 7.49773C6.28734 7.48968 6.52772 7.3856 6.70666 7.20666C6.8856 7.02772 6.98968 6.78734 6.99773 6.5344C7.00578 6.28147 6.9172 6.03496 6.75 5.845V3.75C6.75 3.55109 6.67098 3.36032 6.53033 3.21967C6.38968 3.07902 6.19891 3 6 3C5.80109 3 5.61032 3.07902 5.46967 3.21967C5.32902 3.36032 5.25 3.55109 5.25 3.75V5.75H4.25C4.05109 5.75 3.86032 5.82902 3.71967 5.96967C3.57902 6.11032 3.5 6.30109 3.5 6.5ZM3.37 2.947C3.51834 2.947 3.66334 2.90301 3.78668 2.8206C3.91001 2.73819 4.00614 2.62106 4.06291 2.48401C4.11968 2.34697 4.13453 2.19617 4.10559 2.05068C4.07665 1.9052 4.00522 1.77156 3.90033 1.66667C3.79544 1.56178 3.6618 1.49035 3.51632 1.46141C3.37083 1.43247 3.22003 1.44732 3.08299 1.50409C2.94594 1.56086 2.82881 1.65699 2.7464 1.78032C2.66399 1.90366 2.62 2.04866 2.62 2.197C2.62 2.39591 2.69902 2.58668 2.83967 2.72733C2.98032 2.86798 3.17109 2.947 3.37 2.947ZM1.4565 4.875C1.60484 4.875 1.74984 4.83101 1.87318 4.7486C1.99651 4.66619 2.09264 4.54906 2.14941 4.41201C2.20618 4.27497 2.22103 4.12417 2.19209 3.97868C2.16315 3.8332 2.09172 3.69956 1.98683 3.59467C1.88194 3.48978 1.7483 3.41835 1.60282 3.38941C1.45733 3.36047 1.30653 3.37532 1.16949 3.43209C1.03244 3.48886 0.915309 3.58499 0.832898 3.70832C0.750487 3.83166 0.7065 3.97666 0.7065 4.125C0.7065 4.32391 0.785518 4.51468 0.92617 4.65533C1.06682 4.79598 1.25759 4.875 1.4565 4.875Z" fill="#1E88E5"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_24_591">
+                <rect width="12" height="12" fill="white" transform="translate(0 0.5)"/>
+              </clipPath>
+            </defs>
+          </svg>
+          <p class="fs-10 fw-400">${event.start_date}</p>
+        </div>
+        <div class="date">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 13" fill="none">
+            <g clip-path="url(#clip0_24_591)">
+              <path d="M12 6.5C12 8.0913 11.3679 9.61742 10.2426 10.7426C9.11742 11.8679 7.5913 12.5 6 12.5C4.4087 12.5 2.88258 11.8679 1.75736 10.7426C0.632141 9.61742 0 8.0913 0 6.5C0 6.30109 0.0790176 6.11032 0.21967 5.96967C0.360322 5.82902 0.551088 5.75 0.75 5.75C0.948912 5.75 1.13968 5.82902 1.28033 5.96967C1.42098 6.11032 1.5 6.30109 1.5 6.5C1.5 7.39002 1.76392 8.26004 2.25839 9.00007C2.75285 9.74009 3.45566 10.3169 4.27792 10.6575C5.10019 10.9981 6.00499 11.0872 6.87791 10.9135C7.75082 10.7399 8.55264 10.3113 9.18198 9.68198C9.81132 9.05264 10.2399 8.25082 10.4135 7.37791C10.5872 6.50499 10.4981 5.60019 10.1575 4.77792C9.81686 3.95566 9.24009 3.25285 8.50007 2.75839C7.76004 2.26392 6.89002 2 6 2C5.80109 2 5.61032 1.92098 5.46967 1.78033C5.32902 1.63968 5.25 1.44891 5.25 1.25C5.25 1.05109 5.32902 0.860322 5.46967 0.71967C5.61032 0.579018 5.80109 0.5 6 0.5C7.59077 0.501721 9.1159 1.13441 10.2407 2.25926C11.3656 3.38411 11.9983 4.90923 12 6.5ZM3.5 6.5C3.5 6.69891 3.57902 6.88968 3.71967 7.03033C3.86032 7.17098 4.05109 7.25 4.25 7.25H5.345C5.53496 7.4172 5.78147 7.50578 6.0344 7.49773C6.28734 7.48968 6.52772 7.3856 6.70666 7.20666C6.8856 7.02772 6.98968 6.78734 6.99773 6.5344C7.00578 6.28147 6.9172 6.03496 6.75 5.845V3.75C6.75 3.55109 6.67098 3.36032 6.53033 3.21967C6.38968 3.07902 6.19891 3 6 3C5.80109 3 5.61032 3.07902 5.46967 3.21967C5.32902 3.36032 5.25 3.55109 5.25 3.75V5.75H4.25C4.05109 5.75 3.86032 5.82902 3.71967 5.96967C3.57902 6.11032 3.5 6.30109 3.5 6.5ZM3.37 2.947C3.51834 2.947 3.66334 2.90301 3.78668 2.8206C3.91001 2.73819 4.00614 2.62106 4.06291 2.48401C4.11968 2.34697 4.13453 2.19617 4.10559 2.05068C4.07665 1.9052 4.00522 1.77156 3.90033 1.66667C3.79544 1.56178 3.6618 1.49035 3.51632 1.46141C3.37083 1.43247 3.22003 1.44732 3.08299 1.50409C2.94594 1.56086 2.82881 1.65699 2.7464 1.78032C2.66399 1.90366 2.62 2.04866 2.62 2.197C2.62 2.39591 2.69902 2.58668 2.83967 2.72733C2.98032 2.86798 3.17109 2.947 3.37 2.947ZM1.4565 4.875C1.60484 4.875 1.74984 4.83101 1.87318 4.7486C1.99651 4.66619 2.09264 4.54906 2.14941 4.41201C2.20618 4.27497 2.22103 4.12417 2.19209 3.97868C2.16315 3.8332 2.09172 3.69956 1.98683 3.59467C1.88194 3.48978 1.7483 3.41835 1.60282 3.38941C1.45733 3.36047 1.30653 3.37532 1.16949 3.43209C1.03244 3.48886 0.915309 3.58499 0.832898 3.70832C0.750487 3.83166 0.7065 3.97666 0.7065 4.125C0.7065 4.32391 0.785518 4.51468 0.92617 4.65533C1.06682 4.79598 1.25759 4.875 1.4565 4.875Z" fill="#1E88E5"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_24_591">
+                <rect width="12" height="12" fill="white" transform="translate(0 0.5)"/>
+              </clipPath>
+            </defs>
+          </svg>
+          <p class="fs-10 fw-400">${event.end_date}</p>
+        </div>
+        <div class="modal__participants">
+          <svg xmlns="http://www.w3.org/2000/svg" width="8" height="16" viewBox="0 0 16 24" fill="none">
+            <path d="M7.45273 14.0187C3.19099 14.4039 -0.0558499 18.005 0.000728209 22.2837V22.5007C0.000728209 23.3291 0.672306 24.0007 1.50073 24.0007C2.32915 24.0007 3.00073 23.3291 3.00073 22.5007V22.2237C2.95563 19.5966 4.89438 17.3563 7.50073 17.0237C10.252 16.7509 12.7035 18.76 12.9763 21.5113C12.9924 21.6739 13.0006 21.8373 13.0007 22.0007V22.5007C13.0007 23.3291 13.6723 24.0007 14.5007 24.0007C15.3291 24.0007 16.0007 23.3291 16.0007 22.5007V22.0007C15.9958 17.5774 12.4061 13.9956 7.98288 14.0005C7.80603 14.0007 7.62921 14.0068 7.45273 14.0187Z" fill="#212121"/>
+            <path d="M8.00098 12C11.3147 12 14.001 9.31369 14.001 6C14.001 2.68631 11.3147 0 8.00098 0C4.68729 0 2.00098 2.68631 2.00098 6C2.00426 9.31233 4.68865 11.9967 8.00098 12ZM8.00098 3C9.65782 3 11.001 4.34316 11.001 6C11.001 7.65684 9.65782 9 8.00098 9C6.34413 9 5.00098 7.65684 5.00098 6C5.00098 4.34316 6.34413 3 8.00098 3Z" fill="#212121"/>
+          </svg>
+          <p class="fs-10 fw-400">${event.participants}</p>
+          </div>
+        <a href="https://dev-level.ru/event/${event.id}">Перейти на мероприятие</a>
+      </div>
+    `;
+
+            eventsContainer.appendChild(eventElement);
+          });
+        });
+      });
+
+      let modal = document.querySelector(`#modal_day`);
+      document.body.classList.add("is-modal");
+      modal.style.top = `${yCoord}px`;
+      modal.style.left = `${xCoord}px`;
+      modal.showModal();
+
+      const dayOfWeekElement = modal.querySelector("h2");
+      dayOfWeekElement.innerHTML = `${dayOfWeek}, ${dayOfMonth}`;
+    });
+
+    document.querySelector(".modal__close").addEventListener("click", () => {
+      let modal = document.querySelector(`#modal_day`);
+      document.body.classList.remove("is-modal");
+      modal.close();
+    });
+    document.querySelector("._modal").addEventListener("click", (event) => {
+      if (!event.target.closest("._modal__inner")) {
+        let modal = document.querySelector(`#modal_day`);
+        document.body.classList.remove("is-modal");
+        modal.close();
+      }
+    });
+  });
+
+</script>

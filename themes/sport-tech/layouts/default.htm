@@ -1,0 +1,41 @@
+##
+description = "Default layout"
+
+[notifications]
+[session]
+security = "all"
+==
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% partial 'site/meta' %}
+</head>
+
+<body>
+
+    {% partial 'site/header' %}
+
+
+    {% component 'notifications' %}
+
+    {% partial 'site/flash-messages' %}
+
+    {% set jumbotronTexture = random(['carbon', 'dustnscratches', 'elegant', 'grunge', 'leather', 'lines', 'plaid',
+    'wood']) %}
+
+
+    {% page %}
+
+
+
+    {% partial "site/footer" %}
+
+
+    <!-- Common -->
+    {% partial 'modals/alert-dialog' %}
+    {% partial 'modals/password-dialog' %}
+    {% partial 'modals/ajax-modal' %}
+</body>
+
+</html>

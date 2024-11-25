@@ -1,0 +1,10 @@
+columns:
+    id:
+        label: id
+        type: number
+    user_id:
+        label: user_id
+        type: number
+    sub_events:
+        label: sub_events
+        type: text

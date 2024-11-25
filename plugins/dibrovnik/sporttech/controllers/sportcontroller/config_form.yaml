@@ -1,0 +1,10 @@
+name: SportController
+form: $/dibrovnik/sporttech/models/sport/fields.yaml
+modelClass: Dibrovnik\SportTech\Models\Sport
+defaultRedirect: dibrovnik/sporttech/sportcontroller
+create:
+    redirect: 'dibrovnik/sporttech/sportcontroller/update/:id'
+    redirectClose: dibrovnik/sporttech/sportcontroller
+update:
+    redirect: dibrovnik/sporttech/sportcontroller
+    redirectClose: dibrovnik/sporttech/sportcontroller

@@ -1,0 +1,10 @@
+name: SportEventController
+form: $/dibrovnik/sporttech/models/sportevent/fields.yaml
+modelClass: Dibrovnik\SportTech\Models\SportEvent
+defaultRedirect: dibrovnik/sporttech/sporteventcontroller
+create:
+    redirect: 'dibrovnik/sporttech/sporteventcontroller/update/:id'
+    redirectClose: dibrovnik/sporttech/sporteventcontroller
+update:
+    redirect: dibrovnik/sporttech/sporteventcontroller
+    redirectClose: dibrovnik/sporttech/sporteventcontroller

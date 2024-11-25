@@ -1,0 +1,62 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+    street_address:
+        label: Address
+        span: full
+        type: textarea
+        size: tiny
+        cssClass: pb-2
+        required: true
+        autoFocus: true
+
+    is_business:
+        label: Location is a business address
+        type: checkbox
+        cssClass: pb-2
+
+    city:
+        label: City
+        span: auto
+
+    zip:
+        label: Zip / Postal Code
+        span: auto
+
+    country:
+        label: Country
+        type: dropdown
+        span: auto
+        placeholder: -- select --
+
+    state:
+        label: State
+        type: dropdown
+        span: auto
+        dependsOn: country
+        placeholder: -- select --
+
+    company:
+        label: Company Name
+        span: auto
+
+    phone:
+        label: Phone
+        span: auto
+
+    first_name:
+        label: To First Name
+        span: auto
+        commentAbove: Leave this field blank if it the same as the current the user.
+
+    last_name:
+        label: To Last Name
+        span: auto
+        commentAbove: Leave this field blank if it the same as the current the user.
+
+    is_default:
+        label: Default
+        comment: Use this address by default.
+        type: checkbox

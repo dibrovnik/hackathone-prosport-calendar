@@ -1,0 +1,10 @@
+name: TestController
+form: $/dibrovnik/sporttech/models/test/fields.yaml
+modelClass: Dibrovnik\SportTech\Models\Test
+defaultRedirect: dibrovnik/sporttech/testcontroller
+create:
+    redirect: 'dibrovnik/sporttech/testcontroller/update/:id'
+    redirectClose: dibrovnik/sporttech/testcontroller
+update:
+    redirect: dibrovnik/sporttech/testcontroller
+    redirectClose: dibrovnik/sporttech/testcontroller

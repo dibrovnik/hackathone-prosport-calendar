@@ -1,0 +1,9 @@
+fields:
+    user_id:
+        label: 'User id'
+        span: auto
+        type: number
+    sub_events:
+        label: 'Sub events'
+        span: auto
+        type: text

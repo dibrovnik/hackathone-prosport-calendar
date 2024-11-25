@@ -1,0 +1,14 @@
+{
+  "User Plus+": "Felhasználók Plusz+",
+  "Adds profile fields to users.": "Új személyes mezők a felhasználók adatlapjához.",
+  "Phone": "Telefon",
+  "Profile": "Személyes",
+  "Mobile": "Mobil",
+  "Company": "Cég",
+  "Street Address": "Postacím",
+  "City": "Város",
+  "Zip": "Irszám.",
+  "To First Name": "Keresztnévre",
+  "To Last Name": "Vezetéknévre",
+  "Leave this field blank if it the same as the current the user.": "Hagyja üresen ezt a mezőt, ha megegyezik a jelenlegi felhasználóval."
+}

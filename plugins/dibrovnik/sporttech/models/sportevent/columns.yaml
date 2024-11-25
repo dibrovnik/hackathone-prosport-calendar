@@ -1,0 +1,31 @@
+columns:
+    name:
+        label: name
+        type: text
+    gender:
+        label: gender
+        type: text
+    start_date:
+        label: start_date
+        type: text
+    end_date:
+        label: end_date
+        type: text
+    country:
+        label: country
+        type: text
+    location:
+        label: location
+        type: text
+    participants_count:
+        label: participants_count
+        type: number
+    code:
+        label: code
+        type: text
+    region:
+        label: region
+        type: text
+    city:
+        label: city
+        type: text

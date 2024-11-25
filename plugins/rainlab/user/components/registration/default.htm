@@ -1,0 +1,77 @@
+<form method="post" data-request="onRegister" data-request-flash>
+    <input type="hidden" name="redirect" value="true" />
+
+    {% if __SELF__.canRegister %}
+    <div class="text-center pb-3">
+        <h1 class="h2 mb-3">Создайте аккаунт</h1>
+        <!-- <h2 class="h5 fw-normal">Enter your information below</h2> -->
+    </div>
+
+    <div class="form-floating my-3">
+        <input name="first_name" type="text" class="form-control" id="inputFirstName" placeholder="Имя"
+            autocomplete="given-name" />
+        <label for="inputFirstName">Имя</label>
+    </div>
+
+    <div class="form-floating my-3">
+        <input name="last_name" type="text" class="form-control" id="inputLastName" placeholder="Фамилия"
+            autocomplete="family-name" />
+        <label for="inputLastName">Фамилия</label>
+    </div>
+
+    <div class="form-floating my-3">
+        <input name="email" type="email" class="form-control" id="inputEmail" placeholder="Email"
+            autocomplete="email" />
+        <label for="inputEmail">Email</label>
+    </div>
+
+    <div class="form-floating my-3">
+        <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Пароль"
+            autocomplete="new-password" />
+        <label for="inputPassword">Пароль</label>
+    </div>
+
+    <div class="form-floating my-3">
+        <input name="tel" type="text" class="form-control" id="tel" placeholder="Телефон" autocomplete="tel" required />
+        <label for="tel">Телефон</label>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/imask@7.6.1/dist/imask.min.js"></script>
+
+
+
+    <button class="btn btn-primary btn-lg w-100 py-2" id="submitBtn" data-attach-loading type="submit">
+        Создать аккаунт
+    </button>
+    <script>
+        // Маска для телефона
+        const phoneInput = document.getElementById('tel');
+        IMask(phoneInput, {
+            mask: '+{7}(000)000-00-00'
+        });
+
+        // Валидация длины номера
+        const submitBtn = document.getElementById('submitBtn');
+
+        submitBtn.addEventListener('click', function (event) {
+            const rawValue = phoneInput.value.replace(/[^0-9]/g, ''); // Убираем все нецифровые символы
+            console.log(rawValue.length);
+            if (rawValue.length !== 11) {
+                event.preventDefault(); // Отменяем отправку формы
+                alert('Номер телефона должен содержать ровно 11 цифр!');
+            }
+        });
+    </script>
+    {% else %}
+    <div class="text-center pb-3">
+        <h1 class="h2 mb-3">Create a new account</h1>
+        <h2 class="h5 fw-normal">Registrations are currently disabled</h2>
+    </div>
+    {% endif %}
+
+    <div class="text-center">
+        <p class="mt-5 mb-1 text-body-secondary">
+            Уже есть аккаунт? <a href="{{ 'account/login'|page }}">Войти</a>
+        </p>
+    </div>
+</form>

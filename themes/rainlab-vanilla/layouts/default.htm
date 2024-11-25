@@ -1,0 +1,48 @@
+##
+description = "Default layout"
+
+[notifications]
+[session]
+security = "all"
+==
+<!DOCTYPE html>
+<html>
+    <head>
+        {% partial 'site/meta' %}
+    </head>
+    <body>
+        <!-- Header -->
+        <header id="layout-header">
+            {% partial 'site/header' %}
+        </header>
+
+        {% component 'notifications' %}
+
+        {% partial 'site/flash-messages' %}
+
+        {% set jumbotronTexture = random(['carbon', 'dustnscratches', 'elegant', 'grunge', 'leather', 'lines', 'plaid', 'wood']) %}
+
+        <!-- Content -->
+        <section id="layout-content">
+            <div class="jumbotron pt-2 mb-5 bg-body-tertiary rounded-3" style="background-image:url({{ ('assets/images/textures/'~jumbotronTexture~'.png')|theme }})">
+                <div class="container py-5">
+                    <h1 class="display-5">{{ this.page.title }}</h1>
+                    <p class="col-md-8 fs-4">{{ this.page.description }}</p>
+                </div>
+            </div>
+            <div class="container">
+                {% page %}
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="layout-footer">
+            {% partial "site/footer" %}
+        </footer>
+
+        <!-- Common -->
+        {% partial 'modals/alert-dialog' %}
+        {% partial 'modals/password-dialog' %}
+        {% partial 'modals/ajax-modal' %}
+    </body>
+</html>

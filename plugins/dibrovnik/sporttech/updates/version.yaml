@@ -1,0 +1,59 @@
+v1.0.1:
+    - 'Initialize plugin'
+v1.0.2:
+    - 'Created table dibrovnik_sporttech_test'
+    - builder_table_create_dibrovnik_sporttech_test.php
+v1.0.3:
+    - 'Created table dibrovnik_sporttech_sports_events'
+    - builder_table_create_dibrovnik_sporttech_sports_events.php
+v1.0.4:
+    - 'Created table dibrovnik_sporttech_sports'
+    - builder_table_create_dibrovnik_sporttech_sports.php
+v1.0.5:
+    - 'Created table dibrovnik_sporttech_disciplines'
+    - builder_table_create_dibrovnik_sporttech_disciplines.php
+v1.0.6:
+    - 'Updated table dibrovnik_sporttech_sports'
+    - builder_table_update_dibrovnik_sporttech_sports.php
+v1.0.7:
+    - 'Updated table dibrovnik_sporttech_disciplines'
+    - builder_table_update_dibrovnik_sporttech_disciplines.php
+v1.0.8:
+    - 'Created table dibrovnik_sporttech_event_disciplines'
+    - builder_table_create_dibrovnik_sporttech_event_disciplines.php
+v1.0.9:
+    - 'Created table dibrovnik_sporttech_saved_filters'
+    - builder_table_create_dibrovnik_sporttech_saved_filters.php
+v1.0.10:
+    - 'Updated table dibrovnik_sporttech_sports_events'
+    - builder_table_update_dibrovnik_sporttech_sports_events.php
+v1.0.11:
+    - 'Updated table dibrovnik_sporttech_sports_events'
+    - builder_table_update_dibrovnik_sporttech_sports_events_2.php
+v1.0.12:
+    - 'Updated table dibrovnik_sporttech_sports_events'
+    - builder_table_update_dibrovnik_sporttech_sports_events_3.php
+v1.0.13:
+    - 'Updated table dibrovnik_sporttech_sports_events'
+    - builder_table_update_dibrovnik_sporttech_sports_events_4.php
+v1.0.14:
+    - 'Updated table dibrovnik_sporttech_event_disciplines'
+    - builder_table_update_dibrovnik_sporttech_event_disciplines.php
+v1.0.15:
+    - 'Created table dibrovnik_sporttech_sport_discipline'
+    - builder_table_create_dibrovnik_sporttech_sport_discipline.php
+v1.0.16:
+    - 'Updated table dibrovnik_sporttech_sports_events'
+    - builder_table_update_dibrovnik_sporttech_sports_events_5.php
+v1.0.17:
+    - 'Created table dibrovnik_sporttech_sportsmans'
+    - builder_table_create_dibrovnik_sporttech_sportsmans.php
+v1.0.18:
+    - 'Updated table dibrovnik_sporttech_sportsmans'
+    - builder_table_update_dibrovnik_sporttech_sportsmans.php
+v1.0.19:
+    - 'Updated table dibrovnik_sporttech_sportsmans'
+    - builder_table_update_dibrovnik_sporttech_sportsmans_2.php
+v1.0.20:
+    - 'Updated table dibrovnik_sporttech_sports_events'
+    - builder_table_update_dibrovnik_sporttech_sports_events_6.php

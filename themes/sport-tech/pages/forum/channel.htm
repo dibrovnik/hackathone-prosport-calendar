@@ -1,0 +1,17 @@
+##
+title = "Forum Channel"
+url = "/forum/channel/:slug"
+layout = "default"
+description = "View a specific forum channel."
+hidden = "0"
+
+[resources]
+vars[activeNavLink] = 'forum'
+
+[forumChannel]
+slug = "{{ :slug }}"
+memberPage = "404"
+topicPage = "forum/topic"
+memberPage = "forum/member"
+==
+{% component 'forumChannel' %}

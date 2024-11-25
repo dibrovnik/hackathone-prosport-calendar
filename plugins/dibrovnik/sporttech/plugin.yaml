@@ -1,0 +1,24 @@
+plugin:
+    name: 'dibrovnik.sporttech::lang.plugin.name'
+    description: 'dibrovnik.sporttech::lang.plugin.description'
+    author: DibrovNik
+    icon: oc-icon-bicycle
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: Мероприятия
+        url: dibrovnik/sporttech/testcontroller
+        icon: icon-bicycle
+        sideMenu:
+            sport-events:
+                label: Мероприятия
+                url: dibrovnik/sporttech/sporteventcontroller
+                icon: icon-sitemap
+            sports:
+                label: 'Виды спорта'
+                url: dibrovnik/sporttech/sportcontroller
+                icon: icon-sitemap
+            disciplines:
+                label: Дисциплины
+                url: dibrovnik/sporttech/disciplinecontroller
+                icon: icon-sitemap

@@ -1,0 +1,12 @@
+list: $/dibrovnik/sporttech/models/sport/columns.yaml
+modelClass: Dibrovnik\SportTech\Models\Sport
+title: SportController
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'dibrovnik/sporttech/sportcontroller/update/:id'

@@ -1,0 +1,20 @@
+##
+title = "Forum Member"
+url = "/forum/member/:slug?"
+layout = "default"
+description = "View a specific forum channel."
+hidden = "0"
+
+[resources]
+vars[activeNavLink] = 'forum'
+
+[forumMember]
+slug = "{{ :slug }}"
+memberPage = "404"
+topicPage = "forum/topic"
+channelPage = "forum/channel"
+==
+{% if not member %}
+    {% do abort(404) %}
+{% endif %}
+{% component 'forumMember' %}
